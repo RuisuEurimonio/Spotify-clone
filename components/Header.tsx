@@ -9,13 +9,13 @@ import Button from "./Button";
 
 interface HeaderProps{
     children: React.ReactNode;
-    className?: string
+    className?: string;
 }
 
-const Header: React.FC<HeaderProps> = (
+const Header: React.FC<HeaderProps> = ({
     children,
     className
-) => {
+}) => {
 
     const router = useRouter();
 
@@ -138,8 +138,9 @@ const Header: React.FC<HeaderProps> = (
                     </>
                 </div>
             </div>
+            {children}
         </div>
-    )
+    );
 }
 
 export default Header;
