@@ -3,7 +3,7 @@ import {
     useSessionContext,
     useUser as useSupaUser
 } from "@supabase/auth-helpers-react"
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 import { Subscription, UserDetails } from "@/types";
 
@@ -74,5 +74,15 @@ export const MyUserContextProvider=(props: Props)=>{
     };
 
     return <UserContext.Provider value={value} {...props}/>
+}
+
+export const useUser = () =>{
+
+    const context = useContext(UserContext);
+    if(context=== undefined){
+        throw new Error("useUser must be user within a MyUserContextProvider")
+    }
+
+    return context
 
 }

@@ -69,7 +69,7 @@ const onClick = () =>{
                 group-hover:opacity-100
                 hover:scale-100
             ">
-                <FaPlay class="text-black"></FaPlay>
+                <FaPlay className="text-black"></FaPlay>
             </div>
         </button>
     )
