@@ -12,12 +12,14 @@ import Modal from "./Modal";
 import Input from "./Input";
 import Button from "./Button";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useRouter } from "next/navigation";
 
 const UploadModal = () =>{
 
     const [isLoading, setIsLoading] = useState(false);
-    const user = useUser();
+    const {user} = useUser();
     const supabaseClient = useSupabaseClient();
+    const router = useRouter()
 
     const uploadModal = useUploadModal();
     const {register, handleSubmit, reset} = useForm<FieldValues>({
@@ -55,7 +57,7 @@ const UploadModal = () =>{
                 error: songError
             } = await supabaseClient
                 .storage
-                .from("song")
+                .from("songs")
                 .upload(`song-${values.title}-${uniqueID}`,songFile,{
                     cacheControl:'3600',
                     upsert: false
@@ -63,6 +65,7 @@ const UploadModal = () =>{
 
                 if(songError){
                     setIsLoading(false);
+                    console.log(songError);
                     return toast("Failed song upload")
                 }
 
@@ -72,7 +75,7 @@ const UploadModal = () =>{
                 error: imageError
             } = await supabaseClient
                 .storage
-                .from("image")
+                .from("images")
                 .upload(`image-${values.title}-${uniqueID}`,imageFile,{
                     cacheControl:'3600',
                     upsert: false
@@ -83,6 +86,28 @@ const UploadModal = () =>{
                     return toast("Failed image upload")
                 }
 
+                const {
+                    error: supabaseError
+                } = await supabaseClient
+                .from("songs")
+                .insert({
+                    user_id: user.id,
+                    title: values.title,
+                    author: values.author,
+                    image_path: imageData.path,
+                    song_path: songData.path
+                })
+
+                if(supabaseError){
+                    setIsLoading(false);
+                    return toast.error(supabaseError.message);
+                }
+
+                router.refresh();
+                setIsLoading(false);
+                toast.success("Song created")
+                reset();
+                uploadModal.onClose();
         } catch(error){
             toast.error("Something went wrong");
         } finally{
@@ -112,7 +137,7 @@ const UploadModal = () =>{
                     id="author"
                     disabled={isLoading}
                     {...register('author',{ required : true })}
-                    placeholder="Song title"
+                    placeholder="Author title"
                 >
                 </Input>
                 <div>
