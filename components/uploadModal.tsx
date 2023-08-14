@@ -65,7 +65,6 @@ const UploadModal = () =>{
 
                 if(songError){
                     setIsLoading(false);
-                    console.log(songError);
                     return toast("Failed song upload")
                 }
 

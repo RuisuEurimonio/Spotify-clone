@@ -19,6 +19,15 @@ export interface Product{
     metadata?: Stripe.Metadata
 }
 
+export interface Song{
+    id: string,
+    user_id: string,
+    author: string,
+    title: string,
+    song_path: string,
+    image_path: string
+}
+
 export interface Price {
     id: string,
     product_id?: string,
