@@ -6,6 +6,7 @@ import SupabaseProvider from '@/provider/SupabaseProvider'
 import UserProvider from '@/provider/UseProvider'
 import ModalProvider from '@/provider/ModalProvider'
 import ToasterProvider from '@/provider/ToasterProvider'
+import getSongsByUserId from '@/actions/getSongsByUserID'
 
 const font = Figtree({ subsets: ['latin'] })
 
@@ -14,11 +15,16 @@ export const metadata: Metadata = {
   description: 'Project created by Luis Linares based in "Code with Antonio"',
 }
 
-export default function RootLayout({
+export const revalidate = 0 ;
+
+export default  async function  RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+
+  const userSongs = await getSongsByUserId(); 
+
   return (
     <html lang="en">
       <body className={font.className}>
@@ -26,7 +32,7 @@ export default function RootLayout({
         <SupabaseProvider>
           <UserProvider>
             <ModalProvider/>
-              <Sidebar>
+              <Sidebar songs={userSongs}>
                 {children}
               </Sidebar>
           </UserProvider>
