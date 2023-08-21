@@ -1,7 +1,7 @@
 import getSongs from "@/actions/getSongs";
 import Header from "@/components/Header";
 import ListItem from "@/components/ListItem";
-import PageContent from "./components/pageContent";
+import PageContent from "./components/PageContent";
 
 export var revalidation = 0;
 
@@ -32,7 +32,7 @@ export default async function Home() {
             gap-3
             mt-4
           ">
-            <ListItem image="/images/liked.png" name="liked songs." href="liked.png"></ListItem>
+            <ListItem image="/images/liked.png" name="liked songs." href="liked"></ListItem>
           </div>
         </div>
       </Header>
