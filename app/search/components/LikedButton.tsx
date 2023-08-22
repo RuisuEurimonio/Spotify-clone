@@ -29,7 +29,7 @@ const LikedButton : React.FC<LikedButtonProps> = ({
 
         const fetchData = async () =>{
             const {data, error} = await supabaseClient
-            .from('liked_songs')
+            .from('liked_song')
             .select('*')
             .eq('user_id', user.id)
             .eq('song_id', songId)
@@ -37,6 +37,7 @@ const LikedButton : React.FC<LikedButtonProps> = ({
 
             if(!error && data){
                 setIsLiked(true);
+                console.log("hiii")
             }
         }
 
