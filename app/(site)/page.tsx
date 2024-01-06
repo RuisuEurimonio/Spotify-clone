@@ -3,7 +3,7 @@ import Header from "@/components/Header";
 import ListItem from "@/components/ListItem";
 import PageContent from "./components/PageContent";
 
-export var revalidation = 0;
+export const revalidate = 0;
 
 export default async function Home() {
 

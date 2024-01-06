@@ -80,6 +80,8 @@ const UploadModal = () =>{
                     upsert: false
                 })
 
+                console.log(user);
+
                 if(imageError){
                     setIsLoading(false);
                     return toast("Failed image upload")
